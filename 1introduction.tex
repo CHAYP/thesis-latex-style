@@ -1,15 +1,18 @@
 \justify
 
 \chaptertitle{INTRODUCTION}
-Bandit problems are Sequential decision problems are one model in online learning with has a fixed set of actions, 
-(*adversary)
-In each round a player pick an action from a set and incur a loss associated with that action.
-The goal is to minimize cumulative loss *(at the end).
-There are two different observation models depending on information that player received.*(after picked)
+//Sequential decision problems are one learning model in online learning with has a fixed set of actions, 
+//Sequential decision problems is a learning problem in which 
+Bandit and Expert problems are sequential decision problem in which a player has a set of actions.
+In each time step or round a player decide to pick an action from an action set and incur a loss associated with that action.
+The goal is to minimize the sum of losses throught the decision order.
+There are two observation models depending on information that a player knows.
 In expert case a player knows every losses from every actions in every round.
 In bandit case a player knows only the actual losses that picked by a player.
-*(measure of interest)
-*(weak regret)
+There are three strategies of bandit problems include stochastic, adversarial and markovian.
+In adversarial bandit problems in each round an adversary assign a loss for each actions.*(simultaneously)
+The performance of a player is measure by regret that is different of the total loss that a player incurred and 
+the minimun loss of an action.
 
 *(defination)
 
