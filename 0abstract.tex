@@ -1,0 +1,47 @@
+\justify
+
+\newenvironment{indentabstract}[1]%
+{\begin{list}{}%
+	{\setlength{\leftmargin}{#1}}%
+		\item[]%
+	}
+{\end{list}}
+
+\begin{indentabstract}{0.5in}
+Chayutpong Prompak : Bandit Multiclass Linear Classification for The Group
+Linear Separable Case. 
+Master of Engineering (Computer Engineering), 
+Major Field: Computer Engineering, Department of Computer Engineering. 
+Thesis Advisor: Assistant Professor
+Jittat Fakcharoenphol, Ph.D. Academic Year 2019
+\end{indentabstract}
+\begin{spacing}{1.75}
+\mbox{}
+\end{spacing}
+
+We consider the online multiclass linear classification under the
+bandit feedback setting.  Beygelzimer, Pal, Szorenyi,
+Thiruvenkatachari, Wei, and Zhang [ICML'19] considered two notions
+of linear separability, weak and strong linear separability.  When
+examples are strongly linearly separable with margin $\gamma$, they
+presented an algorithm based on {\sc Multiclass Perceptron} with
+mistake bound $O(K/\gamma^2)$, where $K$ is the number of classes.
+They employed rational kernel to deal with examples under the weakly
+linearly separable condition, and obtained the mistake bound of
+\space\space
+$\min(K\cdot 2^{\tilde{O}(K\log^2(1/\gamma))},K\cdot
+2^{\tilde{O}(\sqrt{1/\gamma}\log K)})$.  In this paper, we refine
+the notion of weak linear separability to support the notion of
+class grouping, called group weak linear separable condition.  This
+situation may arise from the fact that class structures contain
+inherent grouping.  We show that under this condition, we can also
+use the rational kernel and obtain the mistake bound of $K\cdot
+2^{\tilde{O}(\sqrt{1/\gamma}\log L)})$, where $L\leq K$ represents
+the number of groups.
+\vspace*{\fill}
+
+\noindent\begin{tabular}{c c c}
+	\rule{4.2cm}{0.4pt} & \rule{6.5cm}{0.4pt} & 
+	\rule{0.8cm}{0.4pt} / \rule{0.8cm}{0.4pt} / \rule{0.8cm}{0.4pt} \\
+	Student's signature & Thesis Advisor's signature
+\end{tabular}

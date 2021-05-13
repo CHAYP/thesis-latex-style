@@ -1,3 +1,326 @@
 \justify
 
 \chaptertitle{LITERATURE REVIEW}
+
+\subsection{Online multiclass classification}
+For classification in online version, an input $x_t$ comes at time $t$
+, classifier predicts $\hat{y_t}$ then receives feedback information $y_t$ that is the class of $x_t$.
+Let $K$ be the number of classes, $T$ be the number of rounds and $y_t\in \{1,2,\dots,K\}$.
+The protocal(fig~\ref{fig:alg-online}) does until time $T$.
+
+\begin{figure}[hbt!]
+  \begin{algorithm}[H]
+    \SetAlgoLined
+    \DontPrintSemicolon
+    % \KwData{Number of classes $K$, number of rounds $T$}
+    \Begin{
+      \For{$t=1,2,\ldots,T$}{
+        Adversary chooses example $(x_t,y_t)\in V \times \{1,2,\dots,K\}$, where $x_t$ is revealed to the learner.\\
+        Predict class label $\hat{y_t} \in \{1,2,\dots,K\}$.\\
+        Observe feedback $y_t$.
+        }
+        }
+        % \caption{{\sc online multiclass classification}\label{alg:online}~\cite{CrammerS2003-ultraconservative}}
+      \end{algorithm}
+  \centering
+  \caption{Online Multiclass Classification Protocal (~\cite{CrammerS2003-ultraconservative})}
+  \label{fig:alg-online}
+\end{figure}
+
+
+
+\subsection{Perceptron}
+Perceptron (\cite{rosenblatt58a}) is a binary classifier that answers only input $x$ is in the class or not,
+A vector $w$ represented as a class and the answer is depends on the inner product of $x$ and $w$ (fig~\ref{fig:alg-perceptron}).
+The perceptron update $w$ only when the answer is wrong 
+and makes mistake at most $\left\lfloor \left( \frac{R}{\gamma} \right)^2\right\rfloor$ (theorem~\ref{theorem-perceptron}).
+
+\begin{figure}[hbt!]
+  \begin{algorithm}[H]
+    \SetAlgoLined
+    \DontPrintSemicolon
+    \KwData{Number of rounds $T$, $y_t\in \{+1,-1\}$}
+    \KwData{Inner product space $(V,\langle\cdot,\cdot\rangle)$}
+    \Begin{
+      Initialize $w^{(1)}=0$ \\
+        \For{$t=1,2,\ldots,T$}{
+          Predict class label $\hat{y_t}
+          \begin{cases}
+            +1 &\quad \text{if $\langle x_t,w^{(t)}\rangle \geq 0$} \\
+            -1 &\quad \text{otherwise}
+          \end{cases}
+          $.\\
+          Observe feedback $y_t$. \;
+          \If{$\hat{y_t}\neq y_t$}{
+            Update $w^{(t+1)}=w^{(t)}+y_t x_t$ \;
+          }
+        }
+      }
+    \end{algorithm}
+    \caption{Perceptron Algorithm (~\cite{rosenblatt58a})}
+  \label{fig:alg-perceptron}
+\end{figure}
+
+\begin{theorem}[~\cite{rosenblatt58a}]
+  \label{theorem-perceptron}
+  Let $(V,\cdot,\cdot)$ be an inner product space, let $K$ be a
+  positive integer, let $\gamma$ be a positive real number and let $R$ be a non-negative real number. If $(x_1,y_1),(x_2,y_2),\dots,(x_K,y_K)$
+  is a sequence of labeled examples in $V\times\{+1,-1\}$ and some $\gamma\geq 0$ and
+  $\Vert x_1\Vert ,\Vert x_2\Vert ,\dots,\Vert x_T \Vert\leq R$ then PERCEPTRON algorithm makes at most $\left\lfloor \left( \frac{R}{\gamma} \right)^2\right\rfloor$ mistakes.
+\end{theorem}
+
+\subsection{Multiclass Perceptron}
+Let $K$ be the number of classes, multiclass perceptron construct from $K$ perceptrons
+and update depends on $y_t$, see in (fig~\ref{fig:alg-mperceptron}). 
+The multiclass perceptron makes mistake at most $\left\lfloor 2\left( \frac{R}{\gamma} \right)^2\right\rfloor$ (theorem~\ref{theorem:mperceptron}).
+\begin{figure}[hbt!]
+  \begin{algorithm}[H]
+    \SetAlgoLined
+    \DontPrintSemicolon
+    \KwData{Number of classes $K$, number of rounds $T$}
+    \KwData{Inner product space $(V,\langle\cdot,\cdot\rangle)$}
+    \Begin{
+      Initialize $w_1^{(1)}= w_2^{(1)}= \cdots = w_K^{(1)} = 0$ \\
+      \For{$t=1,2,\ldots,T$}{
+        Observe feature vector $x_t\in V$.\\
+        Predict $\hat{y_t}=\text{argmax}_{i\in \{1,2,\dots,K\}}\left<w_t^{(i)},x_t\right>$.\\
+        Observe $y_t\in\{1,2,\dots,K\}$.\\
+        \eIf{$\hat{y_t}\neq y_t$}{
+          Set $w_i^{(t+1)}=w_i^{(t)}$\\
+          For all $i\in \{1,2,\dots,K\}\setminus\{y_t,\hat{y_t}\}$ \;
+          Update $w_{y_t}^{(t+1)}=w_{y_t}^{(t)}+x_t$ \;
+          Update $w_{\hat{y_t}}^{(t+1)}=w_{\hat{y_t}}^{(t)}-x_t$ \;
+        }{
+          Set $w_{i}^{(t+1)}=w_{i}^{(t)}$ for all $i\in \{1,2,\dots,K\}$
+        }
+      }
+    }
+  \end{algorithm}
+  \caption{Multiclass Perceptron Algorithm (~\cite{CrammerS2003-ultraconservative})}
+  \label{fig:alg-mperceptron}
+\end{figure}
+
+\begin{theorem}[~\cite{CrammerS2003-ultraconservative}]
+\label{theorem:mperceptron}
+Let $(V,\cdot,\cdot)$ be an inner product space, let $K$ be a
+positive integer, let $\gamma$ be a positive real number and let $R$ be a non-negative real number. If $(x_1,y_1),(x_2,y_2),\dots,(x_K,y_K)$
+is a sequence of labeled examples in $V\times\{1,2,\dots,K\}$ that are strongly linearly separable with margin $\gamma$ and
+$\Vert x_1\Vert ,\Vert x_2\Vert ,\dots,\Vert x_T \Vert\leq R$ then MULTICLASS PERCEPTRON algorithm makes at most $\left\lfloor 2\left( \frac{R}{\gamma} \right)^2\right\rfloor$ mistakes.
+\end{theorem}
+
+
+\subsection{Linear seperability}
+We restate the definitions for strong and weak linear separability by Beygelzimer~{\em et. al.}~\cite{BeygelzimerPSTWZ2019-separable} here.  
+We use the common notation that $[K]=\{1,2,\ldots,K\}$.
+
+\subsubsection{Strongly linear seperable}
+The examples lie in an inner product space $(V,\langle\cdot,\cdot\rangle)$.  Let $K$ be the number of classes and let $\gamma$ be a positive real number.
+Labeled examples
+\[
+(x_1,y_1),(x_2,y_2),\ldots,(x_T,y_T)\in V\times[K]
+\]
+are {\em strongly linear separable with margin $\gamma$} if there exist vectors $w_1,w_2,\ldots,w_K\in V$ such that
+for all $t\in[T]$,
+\[
+\langle x_t, w_{y_t}\rangle \geq \gamma/2,
+\]
+and
+\[
+\langle x_t, w_i\rangle \leq -\gamma/2,
+\]
+for $i\in [K]\setminus \{y_t\}$,
+and $\sum_{i=1}^K \Vert w_i \Vert^2\leq 1$.
+\subsubsection{Weakly linear seperable}
+On the other hand, the labeled examples are {\em weakly linear separable with margin $\gamma$} if there exist vectors $w_1,w_2,\ldots,w_K\in V$ such that
+for all $t\in[T]$,
+\[
+\langle x_t, w_{y_t}\rangle \geq \langle x_t, w_i\rangle + \gamma,
+\]
+for $i\in [K]\setminus \{y_t\}$, and $\sum_{i=1}^K \Vert w_i \Vert^2\leq 1$.
+
+\subsection{Kernel}
+We give an overview of the kernel methods (see~\cite{ShaweTaylorC2004-kernel-methods} for expositions) and the rational kernel~\cite{ShalevShwartzSS2011-kernel-based}.
+
+The kernel method is a standard approach to extend linear classification algorithms that use only inner products to handle the notions of ``distance'' between pairs of examples to nonlinear classification.
+A {\em positive definite kernel} (or {\em kernel}) is a function of the form $k: X\times X\rightarrow \R$ for some set $X$ such that the matrix $[k(x_i,x_j)]_{i,j=1}^m$ is symmetric positive definite for any set of $m$ examples $x_1,x_2,\ldots,x_m\in X$.  It is known that for every kernel $k$, there exists some inner product space $(V,\fdot{\cdot}{\cdot})$ and a feature map $\phi:X\rightarrow V$ such that $k(x,x')=\fdot{\phi(x)}{\phi(x')}$.  Therefore, a linear learning algorithm can essentially non-linearly map every example into $V$ and work in $V$ instead of the original space without explicitly working with $\phi$ using $k$.  This can be very helpful when the dimension of $V$ is infinite.
+
+As in Beygelzimer~{\em et al.}~\cite{BeygelzimerPSTWZ2019-separable}, we use the rational kernel.  Assume that examples are in $\R^d$.  Denote by $\ball(0,1)$ a unit ball centered at $0$ in $\R^d$.
+The {\em rational kernel} $k:B(0,1)\times B(0,1)\rightarrow\R$ is defined as
+\[
+k(x,x')=\frac{1}{1-\frac{1}{2}\langle x,x'\rangle_{\R^d}}.
+\]
+Given $x,x'\in\R^d$, $k(x,x')$ can be computed in $O(d)$ time.
+
+Let $\ell_2=\{x\in\R^{\infty} : \sum_{i=1}^\infty x_i^2 < +\infty \}$ be the classical real separable Hilbert space equipped with the standard inner product $\fdot{x}{x'}_{\ell_2}=\sum_{i=1}^\infty x_i x'_i$.  We can index the coordinates of $\ell_2$ by $d$-tuples $(\alpha_1,\alpha_2,\ldots,\alpha_d)$ of non-negative integers, the associated feature map $\phi:\ball(0,1)\rightarrow\ell_2$ to $k$ is defined as
+\begin{multline}
+\left(\phi(x_1,x_2,\ldots,x_d)\right)_{(\alpha_1,\alpha_2,\ldots,\alpha_d)} =
+\\
+x_1^{\alpha_1}x_2^{\alpha_2}\cdots x_d^{\alpha_d}
+\cdot
+\sqrt{2^{-(\alpha_1+\alpha_2+\cdots+\alpha_d)}{{\alpha_1+\alpha_2+\cdots+\alpha_d}\choose{\alpha_1,\alpha_2,\ldots,\alpha_d}}},
+\label{eqn:phi}
+\end{multline}
+where
+${{\alpha_1+\alpha_2+\cdots+\alpha_d}\choose{\alpha_1,\alpha_2,\ldots,\alpha_d}}
+=
+\frac{(\alpha_1+\alpha_2+\cdots+\alpha_d)!}{\alpha_1!\alpha_2!\cdots\alpha_d!}$
+is the multinomial coefficient.  It can be verified that $k$ is the
+kernel with its feature map $\phi$ to $\ell_2$ and for any
+$x\in\ball(0,1)$, $\phi(x)\in\ell_2$.
+
+\subsection{Multiclass Linear Classification}
+
+Beygelzimer~{\em et al.}~\cite{BeygelzimerPSTWZ2019-separable}
+presented a learning algorithm for the strongly linearly separable
+examples based using $K$ copies of the {\sc Binary Perceptron}.  They
+obtained a mistake bound of $O(K(R/\gamma)^2)$ when the examples are
+from $\R^d$ with maximum norm $R$ with margin $\gamma$.
+
+Their approach for dealing the weakly linear separable case is to use
+the kernel method.  They introduced the {\sc Kernelized Bandit
+  Algorithm} (Algorithm~\ref{alg:kernel-bandit}) and proved the
+following theorem.
+
+\begin{figure}[bht!]
+  
+  \begin{algorithm}[H]
+    \SetAlgoLined
+    \DontPrintSemicolon
+    \KwData{Number of classes $K$, number of rounds $T$}
+    \KwData{Kernel function $k(\cdot,\cdot)$}
+    \Begin{
+        Initialize $J_1^{(1)}=J_2^{(2)}=\cdots=J_k^{(k)}=\emptyset$\;
+        \For{$t=1,2,\ldots,T$}{
+          Observe feature vector $x_t$\;
+          Compute
+          $S_t=\left\{i : 1\leq i\leq K, \sum_{(x,y)\in J_i^{(t)}} yk(x,x_t)\geq 0\right\}$\;
+          \eIf{$S_t=\emptyset$}{
+            Predict $\hat{y}_t\sim \mbox{Uniform}(\{1,2,\ldots,K\})$\;
+            Observe feedback $z_t=\one[\hat{y}_t\neq y_t]$\;
+            \eIf{$z_t=1$}{
+              Set $J_i^{(t+1)} = J_i^{(t)}$ for all $i\in\{1,2,\ldots,K\}$
+            }{
+              Set $J_i^{(t+1)} = J_i^{(t)}$ for all $i\in\{1,2,\ldots,K\}\setminus\{\hat{y}_t\}$\;
+              Update $J_{\hat{y}_t}^{(t+1)}=J_{\hat{y}_t}^{(t)}\cup\{(x_t,+1)\}$
+            }
+          }{
+            Predict $\hat{y}_t\in S_t$ chosen arbitrarily\;
+            Observe feedback $z_t=\one[\hat{y}_t\neq y_t]$\;
+            \eIf{$z_t=1$}{
+              Set $J_i^{(t+1)} = J_i^{(t)}$ for all $i\in\{1,2,\ldots,K\}\setminus\{\hat{y}_t\}$\;
+              Update $J_{\hat{y}_t}^{(t+1)}=J_{\hat{y}_t}^{(t)}\cup\{(x_t,-1)\}$
+            }{
+              Set $J_i^{(t+1)} = J_i^{(t)}$ for all $i\in\{1,2,\ldots,K\}$
+            }
+          }
+        }
+      }
+    \end{algorithm}
+    \caption{Kernelized Bandit Algorithm (~\cite{BeygelzimerPSTWZ2019-separable})}
+    \label{alg:kernel-bandit}
+\end{figure}
+
+\begin{theorem}[Theorem 4 from~\cite{BeygelzimerPSTWZ2019-separable}]
+  Let $X$ be a non-empty set, let $(V,\fdot{\cdot}{\cdot})$ be an
+  inner product space.  Let $\phi:X\rightarrow V$ be a feature map and
+  let $k:X\times X\rightarrow\R$, where
+  $k(x,x')=\fdot{\phi(x)}{\phi(x')}$, be the kernel.  If
+  $(x_1,y_1),(x_2,y_2),\ldots,(x_T,y_T)\in X\times\{1,2,\ldots,K\}$
+  are labeled examples such that
+  \begin{enumerate}
+  \item the mapped examples $(\phi(x_1),y_1),\ldots,(\phi(x_T),y_T)$
+    are strongly linearly separable with margin $\gamma$,
+  \item $k(x_1,x_1),k(x_2,x_2),\ldots,k(x_T,x_T)\leq R^2$
+  \end{enumerate}
+  then the expected number of mistakes that the {\sc Kernelized Bandit
+    Algorithm} makes is at most $(K-1)\lfloor 4(R/\gamma)^2 \rfloor$.
+  \label{thm:kernel-bandit-mistake-bound}
+\end{theorem}
+
+  The key theorem for establishing the mistake bound is the following
+margin transformation theorem based on the rational kernel.
+
+\begin{theorem}[Theorem 5 from~\cite{BeygelzimerPSTWZ2019-separable}]
+  (Margin transformation from~\cite{BeygelzimerPSTWZ2019-separable}). Let
+  $(x_1,y_1),(x_2,y_2),\ldots,(x_T,y_T)\in \ball(0,1)\times [K]$ be a
+  sequence of labeled examples that is weakly linear separable with
+  margin $\gamma >0$.  Let $\phi$ defined as in (\ref{eqn:phi}) let
+  \[
+  \gamma_1 = \frac{
+    \left[376\lceil\log_2(2K-2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{
+      \frac{-\lceil\log_2(2K-2)\rceil\cdot
+      \left\lceil\sqrt{2/\gamma}\right\rceil}{2}}
+  }{2\sqrt{K}},
+  \]
+  \[
+  \gamma_2 =
+  \frac{
+    \left(2^{s+1}r(K-1)(4s+2)\right)^{-(s+1/2)r(K-1)}
+  }{
+    4\sqrt{K}(4K-5)2^{K-1}
+  }
+  \]
+  where $r=2\lceil\frac{1}{4}\log_2(4K-3)\rceil+1$ and
+  $s=\lceil\log_2(2/\gamma)\rceil$.  Then the feature map $\phi$ makes
+  the sequence $(\phi (x_1),y_1),(\phi (x_2),y_2),\ldots,(\phi
+  (x_T),y_T)$ strongly linearly separable with margin
+  $\gamma'=\max\{\gamma_1,\gamma_2\}$.  Also for all $t$,
+  $k(x_t,x_t)\leq 2$.
+\end{theorem}
+
+This implies the following mistake bound.
+\begin{corollary}[Corollary 6 from~\cite{BeygelzimerPSTWZ2019-separable}]
+    (Mistake upper bound
+    from~\cite{BeygelzimerPSTWZ2019-separable}). The mistake bound made
+    by Algorithm~\ref{alg:kernel-bandit} when the examples are weakly
+    linearly separable with margin $\gamma$ is at most
+    $\min(2^{\tilde{O}(K\log^2(1/\gamma))},2^{\tilde{O}(\sqrt{1/\gamma}\log
+      K)})$.
+  \end{corollary}
+  
+  Beygelzimer {\em et al.}~\cite{BeygelzimerPSTWZ2019-separable} gave two margin transformation proofs.  
+  In this paper, we only provide one margin transformation based on the Chebyshev polynomials (Theorem 7 from~\cite{BeygelzimerPSTWZ2019-separable}).
+
+\subsection{Separating polynomials}
+\label{sect:sep-poly}
+
+This section proves Theorem~\ref{thm:sep-poly}.  As
+in~\cite{BeygelzimerPSTWZ2019-separable}
+and~\cite{KlivansS2004-halfspaces-margin}, we use the Chebyshev
+polynomials~\cite{MasonH2002-chebyshev} $T_n(\cdot)$ defined as
+follows.
+\begin{align*}
+    T_0(z)&=1,\\
+    T_1(z)&=z,\\
+    T_{n+1}&=2z T_n(z)-T_{n-1}(z) \;\;\text{for $n\geq 1$}
+\end{align*}
+
+The following two lemmas are
+from~\cite{BeygelzimerPSTWZ2019-separable}.
+
+\begin{lemma}[from Lemma 15 in~\cite{BeygelzimerPSTWZ2019-separable}]
+\label{lem:cheby-prop}
+(Properties of Chebyshev polynomials) Chebyshev polynomials satisfy
+\begin{enumerate}
+    \item $deg(T_n) = n$ for all $n \geq 0$.
+    \item If $n \geq 1$, the leading coefficient of $T_n(z)$ is $2^{n-1}$.
+    \item $T_n(\cos (\theta)) = \cos (n\theta)$ for all $\theta \in \R$ and all $n \geq 0$.
+    \item $T_n(\cosh (\theta)) = \cosh (n\theta)$ for all $\theta \in \R$ and all $n \geq 0$.
+    \item $|T_n(z)| \leq 1$ for all $z \in [-1, 1]$ and all $n \geq 0$.
+    \item $T_n(z) \geq 1 + n^2(z - 1)$ for all $z \geq 1$ and all $n \geq 0$.
+    \item $\|T_n\| \leq (1+\sqrt{2})^n$ for all $n \geq 0$.
+\end{enumerate}
+\end{lemma}
+
+\begin{lemma}[from Lemma 14 in~\cite{BeygelzimerPSTWZ2019-separable}]
+\label{lem:poly-prop}
+(Properties of norm of polynomials) 
+\begin{enumerate}
+    \item Let $p_1,p_2,\ldots,p_n$ be multivariate polynomials and let $p(x)=\prod_{j=1}^n p_j(x)$
+    be their product. Then, $\|p\|^2\leq n^{\sum_{j=1}^n deg(p_j)}\prod_{j=1}^n \|p_j\|^2$.
+    \item Let $q$ be a multivariate polynomial of degree at most $s$ and let $p(x)=(q(x))^n$. Then,
+    $\|p\|^2\leq n^{ns}\|q\|^{2n}$.
+    \item Let $p_1,p_2,\ldots,p_n$ be multivariate polynomials. Then, 
+    $\left\|\sum_{j=1}^n p_j\right\|^2 \leq n\sum_{j=1}^n \|p_j\|^2.$
+\end{enumerate}
+\end{lemma}

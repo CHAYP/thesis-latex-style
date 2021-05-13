@@ -1,24 +1,68 @@
 \justify
+\centering
+{\fontsize{14pt}{1.5}\selectfont BANDIT MULTICLASS LINEAR CLASSIFICATION FOR THE GROUP LINEAR SEPARABLE CASE}
+\justify
 
 \chaptertitle{INTRODUCTION}
-//Sequential decision problems are one learning model in online learning with has a fixed set of actions, 
-//Sequential decision problems is a learning problem in which 
-Bandit and Expert problems are sequential decision problem in which a player has a set of actions.
-In each time step or round a player decide to pick an action from an action set and incur a loss associated with that action.
-The goal is to minimize the sum of losses throught the decision order.
-There are two observation models depending on information that a player knows.
-In expert case a player knows every losses from every actions in every round.
-In bandit case a player knows only the actual losses that picked by a player.
-There are three strategies of bandit problems include stochastic, adversarial and markovian.
-In adversarial bandit problems in each round an adversary assign a loss for each actions.*(simultaneously)
-The performance of a player is measure by regret that is different of the total loss that a player incurred and 
-the minimun loss of an action.
 
-*(defination)
+% \figname sdfas
+% \addcontentsline{lot}{chapter}{test table}
+% \addcontentsline{lof}{chapter}{test figure}
+% //ACKNOWLEDGEMENTS
+% //TABLE OF CONTENTS i
+% //LIST OF TABLES ii
+% //LIST OF FIGURES iv
+% //LIST OF ABBREVIATIONS viii
+% //INTRODUCTION 1
+% //OBJECTIVES 2
+% //LITERATURE REVIEW 3
+% //MATERIALS AND METHODS 16
+% //Materials 16
+% //Methods 25
+% //RESULTS AND DISCUSSION 36
+% //-Results 39
+% //-Discussion 43
+% //CONCLUSION AND RECOMMENDATIONS 95
+% //Conclusion 95
+% //Recommendations 99
+% //LITERATURE CITED 103
+% //APPENDICES 114
+% //Appendix A Adsorption result 115
+% //Appendix B Questionnaire 120
+% //CURRICULUM VITAE 122
 
-background online learning
-online learning
-sequential decision problems
-adversary model
-expert , bandit problems
-bandit with movement costs
+Classification is the classical problem in machine learning,
+that is there are inputs and each of them labeled by a class,
+the task is to receive only inputs and predicts what classes they belong to.
+There are various types of classifiers, the common one is linear classifiers.
+
+Linear classifiers find a relationship between classes that are represented by linear combination and input,
+or in the other words, the classifier views an input as a $d$ dimensional vector and separates the vector from the others with $d-1$ dimensional hyperplane.
+Some of the well-known examples are support-vector machines(SVMs) and perceptron.
+Everything seems to be fine, however, some of the data can't be separated by the hyperplane
+but linear classification can also classify non-linear data by using the kernel.
+The concept is to mapping data into higher-dimensional space which should be made 
+the separable easier.
+
+Generally, classifier accuracy is evaluated by error rate. Although for online learning, the classifier classifies the input and updates itself each time.
+Mistake bound is an alternative approach that looks appropriate for evaluation.
+Moreover, there is one more feedback setting for the classification problem. 
+After the classifier predicts the input class then receives feedback only correct if the prediction is correct and wrong if otherwise.
+In full-information feedback the multiclass perceptron, \cite{CrammerS2003-ultraconservative} is $\lfloor 2(R/\gamma)^2\rfloor$ mistakes
+and any algorithms must make at least $\frac{1}{2}\lfloor (R/\gamma)^2\rfloor$ mistakes.
+In bandit feedback, \cite{BeygelzimerPSTWZ2019-separable} provide a simple algorithm and show that the mistake bound
+is $O(K(R/\gamma)^2)$ in expectation, and for any randomized algorithm must make $\Omega (K(R/\gamma)^2)$ mistakes.
+
+\cite{BeygelzimerPSTWZ2019-separable} considered two notions of linear separability, weak and strong linear
+separability from \cite{CrammerS2003-ultraconservative}
+and employed rational kernel to deal with examples under the weakly linearly separable condition, and obtained
+the mistake bound of 
+$\min(K\cdot 2^{\tilde{O}(K\log^2(1/\gamma))},K\cdot 2^{\tilde{O}(\sqrt{1/\gamma}\log K)})$
+we refine the notion of weak linear separability to
+support the notion of class grouping, called group weak linear
+separable condition. This situation may arise from the fact that
+class structures contain inherent grouping. We show that under
+this condition, we can also use the rational ke
+rnel and obtain the
+mistake bound of $K\cdot 2^{\tilde{O}(\sqrt{1/\gamma}\log L)}$ , where $L\leq K$ represents
+the number of groups.

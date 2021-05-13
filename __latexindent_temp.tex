@@ -3,7 +3,6 @@
 \usepackage{algorithmic}
 \usepackage{array}
 %\usepackage{setspace}
-\usepackage[notindex]{tocbibind}
 \usepackage{pdflscape}
 \usepackage{longtable}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -44,31 +43,22 @@
 \begin{document}
 
 \include{titlepage}
+% \pagenumbering{roman}
 
-\pagenumbering{gobble}
-\include{0abstract}
-\include{acknowledge}
-
-\pagenumbering{roman}
 \tableofcontents
-\clearpage
+\listoftables
 \listoffigures
-\clearpage
-% \listoftables
-% \clearpage
 
 \pagenumbering{arabic}
+
 \include{1introduction}
-\include{11objective}
 \include{2lit_review}
 \include{3methodology}
 \include{4experiment}
-\include{5conclusion}
-\include{cv}
 
 \label{ch:cited}
 \nocite{*}
-% \addcontentsline{toc}{chapter}{\bibname}
+\addcontentsline{toc}{chapter}{\bibname}
 % \bibliographystyle{plainnat}
 \bibliographystyle{myplainnat}
 \bibliography{ref}

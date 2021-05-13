@@ -1,3 +1,405 @@
 \justify
 
-\chaptertitle{METHODOLOGIES}
+\chaptertitle{MATERIALS AND METHODS}
+\section{Materials}
+\begin{enumerate}
+  \item Acer Swift SF314
+  \item Logitech G403 hero
+  \item SteelSeries QcK mini
+  \item AKG N20
+\end{enumerate}
+
+\section{Methods}
+\subsection{Intra-group boundaries}
+We first prove a structural property of intra-group classes.  The
+following lemma shows that it is possible to separate one class from
+the rest in the same group using only lower and upper thresholds.
+This is independent of the number of classes in that group.
+
+\begin{lemma}
+  For any group $i\in [L]$, for any class $y\in G_i$, there exists
+  reals $b_i\leq t_i$ such that for all $t\in[T]$ such that
+  (1) when $y_t=y$, 
+  \[
+  b_i + \gamma \leq \langle u'_i,x_t\rangle \leq t_i - \gamma;
+  \]
+  and (2) when $g(y_t)=g(y)$ but $y_t\neq y$, either
+  \[
+  \langle x_t,u'_i\rangle \leq b_i - \gamma,
+  \]
+  or
+  \[
+  \langle x_t,u'_i\rangle \geq t_i + \gamma.
+  \]
+  \label{lemma:boundaries}
+\end{lemma}
+\begin{proof}{lemma \ref{lemma:boundaries}}
+  Let $S_y = \{(x_j,y_j) : y_j=y, 1\leq j\leq T\}$ be the set of
+  examples with label $y$.  Let $b_i=\min_{(x,y)\in S_y}\langle
+  x,u'_i\rangle-\gamma$ and $t_i=\max_{(x,y)\in S_y}\langle
+  x,u'_i\rangle+\gamma$.  The lemma follows from the definition of
+  group weakly linear separability.
+\end{proof}
+
+\subsection{Group weakly linear separability}
+We now define group weakly linear separability.
+Let ${\mathcal G}=\{G_1,G_2,\ldots,G_L\}$ be a partition of $[K]$, i.e., $G_i\subseteq [K]$ for all $i$,
+$G_i\cap G_j=\emptyset$ for $i\neq j$, and $\bigcup G_i = [K]$.  
+Let $g:[K] \rightarrow [L]$ be a mapping function such that $g(i)\mapsto j$ iff $i\in G_j$.
+We say that the labeled examples
+\[
+(x_1,y_1),(x_2,y_2),\ldots,(x_T,y_T)\in V\times[K]
+\]
+are {\em group weakly linear separable with margin $\gamma$ under ${\mathcal G}$} 
+if 
+\begin{enumerate}
+\item there exist vectors $u_1,u_2,\ldots,u_L\in V$ such that
+$\sum_{i=1}^L \Vert u_i \Vert^2\leq 1$, and, for all $t\in[T]$, 
+\[
+\langle x_t, u_{g(y_t)}\rangle \geq \langle x_t, u_p\rangle + \gamma,
+\]
+for all $p\in [L] \setminus\{g(y_t)\}$, 
+%
+\item there exist vectors $u'_1,u'_2,\ldots,u'_L\in V$ such that
+$\sum_{i=1}^L \Vert u'_i \Vert^2\leq 1$, and, for all $t\in[T], t'\in[T]$ such that $y_t\neq y_{t'}$ and $g(y_t)=g(y_{t'})$,
+either
+\[
+\langle x_t, u'_{g(y_t)}\rangle \geq \langle x_{t'}, u'_{g(y_t)}\rangle + 2\gamma,
+\]
+or
+\[
+\langle x_t, u'_{g(y_t)}\rangle \leq \langle x_{t'}, u'_{g(y_t)}\rangle - 2\gamma.
+\]
+\end{enumerate}
+
+Note that vectors $u_i$'s define inter-group hyperplanes, while each
+$u'_i$ defines intra-group boundaries.  Also note that, to simplify
+our proofs, the ``margin'' between intra-group classes is $2\gamma$;
+this would create the $+\gamma$ and $-\gamma$ gaps that already exist
+between groups.
+
+To illustrate the idea, Fig.~\ref{fig:sep-examples} shows 3 sets of examples.  
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\textwidth]{sep-examples.png}
+\caption{Three set of examples in $\R^2$ showing different linear separable conditions. Thick lines represent class boundaries. (a) Strongly linear separable examples with 3 classes (linearly separable in $\R^3$).  (b) Weakly linear separable examples with 3 classes.  (c) Group weakly linear separable examples with 3 groups; group 1 (white) contains 3 classes, group 2 (black) contains 4 classes, and group 3 (gray) contains 1 class.}
+\label{fig:sep-examples}
+\end{figure}
+
+\subsection{Margin transformation}
+
+This section is devoted to the proofs of
+Theorem~\ref{thm:margin-trans}.  A key property of the space $\ell_2$
+is that it contains all multivariate polynomials and the rational
+kernel $k$ allows us to work in that space.  The following lemma is
+from~\cite{BeygelzimerPSTWZ2019-separable}.
+
+\begin{lemma}[from Lemma 9 in~\cite{BeygelzimerPSTWZ2019-separable}]
+\label{lem:norm-bound}
+(Norm bound) Let $p:\R^d\to \R$ be a multivariate polynomial. There exists $c\in \ell_2$ such that $p(x)=\fdot{c}{\phi(x)}_{\ell_2}$ and $\|c\|_{\ell_2}\leq 2^{deg(p)/2}\|p\|.$
+\end{lemma}
+
+To proof Theorem~\ref{thm:margin-trans}, we need to establish the
+existence of multivariate polynomials that separate one class from the
+other.  Consider class $i\in [K]$ in group $g(i)$.  Its positive
+example $x$, when compared with examples from other group $j\neq
+g(i)$, satisfies
+\[
+\langle u_{g(i)},x\rangle - \langle u_j,x\rangle
+=
+\langle u_{g(i)}-u_j,x\rangle 
+\geq \gamma,
+\]
+implying that all examples in class $i$ lie in
+\[
+R^{+}_i = \bigcap_{j\neq g(i)}\{x : \langle u_{g(i)}-u_j,x\rangle \geq \gamma\}, 
+\]
+while all examples in other groups lie in
+\[
+R^{-}_i = \bigcup_{j\neq g(i)}\{x : \langle u_{g(i)}-u_j,x\rangle \leq -\gamma\}.
+\]
+When comparing with other classes $j$ in the same group $g(i)$, from
+Lemma~\ref{lemma:boundaries}, we know that there exists thresholds
+$b_i$ and $t_i$ that can be used to separate examples from group $i$,
+i.e., all its positive examples lie in 
+\[
+\hat{R}^{+}_i=\{x : \langle u'_{g(i)},x\rangle \geq b_i+\gamma\}
+\cap
+\{x : \langle u'_{g(i)},x\rangle \leq t_i-\gamma\},
+\]
+while examples from other classes in group $g(i)$ lie in 
+\[
+\hat{R}^{-}_i=\{x : \langle u'_{g(i)},x\rangle \leq b_i-\gamma\}
+\cup
+\{x : \langle u'_{g(i)},x\rangle \geq t_i+\gamma\}.
+\]
+Let $v_b=\frac{b_i}{\|u'_{g(i)}\|}u'_{g(i)}$ and
+$v_t=\frac{t_i}{\|u'_{g(i)}\|}u'_{g(i)}$.  Both sets can be expressed as
+\begin{align*}
+\hat{R}^{+}_i = & \ 
+\{x : \langle u'_{g(i)},x\rangle \geq \langle u'_{g(i)},v_b \rangle+\gamma\} 
+\ \cap \\
+& \ \{x : \langle u'_{g(i)},x\rangle \leq \langle u'_{g(i)},v_t \rangle-\gamma\},
+\end{align*}
+while examples from other classes in group $g(i)$ lie in 
+\begin{align*}
+\hat{R}^{-}_i = & \
+\{x : \langle u'_{g(i)},x\rangle \leq \langle u'_{g(i)},v_b \rangle-\gamma\}
+\ \cup \\
+& \ \{x : \langle u'_{g(i)},x\rangle \geq \langle u'_{g(i)},v_t \rangle+\gamma\}.
+\end{align*}
+
+From Lemma~\ref{lem:norm-bound}, for class $i$, it is enough to
+establish a multivariate polynomial $p_i$ such that
+\begin{align*}
+x\in R^{+}_i \cap \hat{R}^{+}_i & \ \ \ \Rightarrow & p_i(x) & \geq \gamma'/2, \\
+x\in R^{-}_i \cup \hat{R}^{-}_i & \ \ \ \Rightarrow & p_i(x) & \leq -\gamma'/2.
+\end{align*}
+
+
+This is shown in the Theorem~\ref{thm:sep-poly} below.  This theorem
+is fairly technical and is proved in Literature~\ref{sect:sep-poly}
+
+\begin{theorem}
+(Polynomial approximation of intersection of halfspaces)
+Let $v_1,v_2,\ldots,v_m \in V$ such that $\|v_1\|,\|v_2\|,\ldots,\|v_m\| \leq 1$.
+Let $v_b,v_t\in V$ such that $\|v_b\|\leq 1$ and $\|v_t\|\leq 1$.
+Let $v' \in V$ such that $\|v'\|\leq 1$.
+Let $\gamma \in (0,1)$ and $x \in \ball(0,1)$.
+There exists a multivariate polynomial $p:\R^d\to \R$ such that
+\begin{enumerate}
+\item $p(x) \geq \frac{1}{2}$ for all $x \in \left(\bigcap_{i=1}^m \left\{x: \fdot{v_i}{x}\geq \gamma\right\}\right) \cap \left\{x:\fdot{x}{v'} \geq \fdot{v_b}{v'}+\gamma\right\} \cap \left\{x: \fdot{x}{v'} \leq \fdot{v_t}{v'}-\gamma\right\},$
+\item $p(x) \leq -\frac{1}{2}$ for all $x \in \left(\bigcup_{i=1}^m \left\{x: \fdot{v_i}{x}\leq -\gamma\right\}\right) \cup \left\{x: \fdot{x}{v'} \leq \fdot{v_b}{v'}-\gamma\right\} \cup \left\{x: \fdot{x}{v'} \geq \fdot{v_t}{v'}+\gamma\right\},$
+\item $deg(p)=\lceil\log_2(2m+4)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil,$
+\item $\|p\|\leq \frac{9}{2}\left[420\lceil\log_2(2m+4)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{\frac{\lceil\log_2(2m+4)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}$
+\end{enumerate}
+
+\label{thm:sep-poly}
+\end{theorem}
+
+Our proof follows the approach in~\cite{BeygelzimerPSTWZ2019-separable}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:sep-poly}]
+Let $r=\lceil\log_2(2m+4)\rceil$ and $s=\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil$.
+Define the polynomial $p:\R^d\to \R$ as
+\begin{align*}
+    p(x) &= m+\frac{5}{2}-\sum_{i=1}^m (T_s(1-\fdot{v_i}{x}))^r \\
+    &-(T_s(1-\fdot{x-v_b}{v'}/2))^r \\
+    &-(T_s(1-\fdot{v_t-x}{v'}/2))^r.
+\end{align*}
+
+First, consider the case when
+\begin{align*}
+  x \in & \left(\bigcap_{i=1}^m \left\{x: \fdot{v_i}{x}\geq \gamma\right\}\right) \cap \left\{x: \fdot{x}{v'} \geq \fdot{v_b}{v'}+\gamma\right\} \cap \\
+  & \left\{x: \fdot{x}{v'} \leq \fdot{v_t}{v'}-\gamma\right\}.
+\end{align*}
+
+Note that $\langle v_i, x\rangle \geq \gamma$ for all $i\in [m]$.
+Since $\|x\|\leq 1$ and $\|v_i\|\leq 1$, we have $\fdot{v_i}{x} \in [0,1]$; 
+thus, $(T_s(1-\fdot{v_i}{x}))^r \in [-1,1]$.
+Consider the terms involving $v_b$ and $v_t$.  Since $\|x\|,\|v_b\|,\|v_t\|\leq 1$, we have that $\|x-v_b\|\leq 2$ and $\|v_t-x\|\leq 2$.  This implies that
+$1\geq\fdot{x-v_b}{v'}/2\geq\gamma/2$ and $1\geq\fdot{v_t-x}{v'}/2\geq\gamma/2$; hence,
+$(T_s(1-\fdot{x-v_b}{v'}/2))^r\in [-1,1]$ and $(T_s(1-\fdot{v_t-x}{v'}/2))^r\in[-1,1]$.
+Therefore,
+\[
+p(x)\geq m+\frac{5}{2}-m-1-1\geq \frac{1}{2}.
+\]
+
+Now consider the case when
+\begin{align*}
+  x  \in & \bigcup_{i=1}^m \left\{x:\fdot{v_i}{x}\leq -\gamma\right\} \cup \left\{x:\fdot{x}{v'} \leq \fdot{v_b}{v'}-\gamma\right\} \cup \\
+  & \left\{x:\fdot{x}{v'} \geq \fdot{v_t}{v'}+\gamma\right\}
+\end{align*}
+There are two subcases to consider.
+
+{\em Subcase 1:} Suppose that for some $i$, $\fdot{v_i}{x}\leq-\gamma$.  
+In this case, $1-\fdot{v_i}{x}\geq 1+\gamma$ and
+Lemma~\ref{lem:cheby-prop} (part 6) implies that
+\[
+  T_s(1-\fdot{v_i}{x}) \geq 1+s^2\gamma \geq 1+2 \geq 2,
+\]
+and thus, $(T_s(1-\fdot{v_i}{x}))^r\geq 2^r\geq 2m+4$.
+
+Since $T_s(1-\fdot{v_i}{x}))^r \geq -1$ for all $i$, 
+$(T_s(1-\fdot{x-v_b}{v'}/2))^r\geq -1$, and $(T_s(1-\fdot{v_t-x}{v'}/2))^r\geq -1$, 
+we have that
+\begin{align*}
+    p(x)&=m+\frac{5}{2}-(T_s(1-\fdot{v_i}{x}))^r \\
+    &-\sum_{j\in [m]j\neq i} (T_s(1-\fdot{v_j}{x}))^r \\
+    &-(T_s(1-\fdot{x-v_b}{v'}/2))^r \\
+    &-(T_s(1-\fdot{v_t-x}{v'}/2))^r \\
+    &\leq m+\frac{5}{2}-(2m+4)+(m-1)+2 \leq -\frac{1}{2}.
+\end{align*}
+
+{\em Subcase 2:} Consider the other case when for all $i$, $\fdot{v_i}{x} > -\gamma$.
+We deal with the case that $\fdot{x}{v'} \leq \fdot{v_b}{v'}-\gamma$.  
+The case when $\fdot{x}{v'} \geq \fdot{v_t}{v'}+\gamma$ can be handled similarly.
+
+Since $\fdot{x-v_b}{v'} \leq -\gamma$, we have $1-\fdot{x-v_b}{v'}/2\geq 1 + \gamma/2$.
+Lemma~\ref{lem:cheby-prop} (part 6) implies that
+\[
+  T_s(1-\fdot{x-v_b}{v'}/2)\geq 1+s^2\gamma/2 \geq 1+2/2 \geq 2,
+\]
+and $(T_s(1-\fdot{x-v_b}{v'}/2))^r\geq 2m+4$.  
+Applying the same argument as in Subcase 1, this implies that $p(x)\leq-\frac{1}{2}$.
+
+The degree of $p$ is the maximum degree of the terms $(T_s(1-\fdot{v_i}{x}))^r$, $(T_s(1-\fdot{x-v_b}{v'}/2))^r$, and $(T_s(1-\fdot{v_t-x}{v'})/2)^r$; thus, it is $r\cdot s$.
+
+Finally, we prove the upper bound of norm of $p$. Let $f_i(x)=1-\fdot{v_i}{x}$, 
+let $k_b(x)=1-\fdot{x-v_b}{v'}/2$, $k_t(x)=1-\fdot{v_t-x}{v'}/2$.
+\[
+\|f_i\|^2=1+\|v_i\|^2\leq 1+1=2,
+\]
+\[
+\|k_b\|^2=1+\frac{\|x-v_b\|^2\cdot\|u'\|^2}{2}\leq 1+\frac{4\cdot1}{2}=3
+\]
+and
+\[
+\|k_t\|^2=1+\frac{\|v_t-x\|^2\cdot\|u'\|^2}{2}\leq 1+\frac{4\cdot1}{2}=3.
+\]
+
+Let $T_s(z)=\sum_{j=0}^s c_j z^j$ be the expansion of $s$-th Chebyshev polynomial.
+
+We first deal with $\|T_s(1-\fdot{v_i}{x})\|^2$.
+By lemma~\ref{lem:cheby-prop} and \ref{lem:poly-prop}, $s+1\leq2^s$ for any non-negative integer, we have
+% need prop of norm of polynomial
+\begin{align*}
+    \|T_s(1-\fdot{v_i}{x})\|^2 &= \|T_s(f_i)\|^2 \\
+    &=\left\|\sum_{j=0}^s c_j(f_i)^j\right\|^2 \\
+    &\leq (s+1)\sum_{j=0}^s\left\| c_j(f_i)^j\right\|^2 \\
+    &=(s+1)\sum_{j=0}^s c_j^2\left\|(f_i)^j\right\|^2 \\
+    &\leq (s+1)\sum_{j=0}^s c_j^2j^j\left\|f_i\right\|^{2j} \\
+    &\leq (s+1)\sum_{j=0}^s c_j^2j^j2^{2j} \\
+    &\leq (s+1)s^s2^{2s}\sum_{j=0}^s c_j^2 \\
+    &=(s+1)s^s2^{2s}\|T_s\|^2 \\
+    &=(s+1)s^s2^{2s}(1+\sqrt{2})^{2s} \\
+    &=(s+1)\left(4(1+\sqrt{2})^2s\right)^s \\
+    &\leq (8(1+\sqrt{2})^2s)^s \\
+    &\leq (47s)^s.
+\end{align*}
+
+The other two terms $\|T_s(\fdot{x-v_b}{v'}/2)\|^2$ and $\|T_s(\fdot{v_t-x}{v'}/2)\|^2$ can be analyzed similarly.  We have that
+\begin{align*}
+    \|T_s(\fdot{x-v_b}{v'}/2)\|^2&=\|T_s(k_b)\|^2 \\
+    &=\left\|\sum_{j=0}^s c_j(k_b)^j\right\|^2 \\
+    &\leq (s+1)\sum_{j=0}^s c_j^2j^j\left\|k_b\right\|^{2j} \\
+    &\leq (s+1)\sum_{j=0}^s c_j^2j^j3^{2j} \\
+    &\leq (s+1)s^s3^{2s}\sum_{j=0}^s c_j^2 \\
+    &=(s+1)s^s3^{2s}\|T_s\|^2 \\
+    &=(s+1)s^s3^{2s}(1+\sqrt{2})^{2s} \\
+    &=(s+1)\left(9(1+\sqrt{2})^2s\right)^s \\
+    &\leq (9(1+\sqrt{2})^2s)^s \\
+    &\leq (105s)^s
+\end{align*}
+% (105s')^s'
+and
+\begin{align*}
+    \|T_s(\fdot{v_t-x}{v'}/2)\|^2 &= \|T_s(k_t)\|^2 \\
+    &=\left\|\sum_{j=0}^s c_j(k_t)^j\right\|^2 \\
+    &\leq (105s)^s.
+\end{align*}
+
+Finally,
+\begin{align*}
+    \|p\|&\leq m+\frac{5}{2}+\sum_{i=1}^m\left\|T_s(f_i)^r\right\|
+    +\left\|T_s(k_b)^r\right\|+\left\|T_s(k_t)^r\right\| \\
+    &=m+\frac{5}{2}+\sum_{i=1}^m\sqrt{\left\|T_s(f_i)^r\right\|^2} \\
+    &\ \ \ +\sqrt{\left\|T_s(k_b)^r\right\|^2} +\sqrt{\left\|T_s(k_t)^r\right\|^2} \\
+    &\leq m+\frac{5}{2}+\sum_{i=1}^m\sqrt{r^{rs}\left\|T_s(f_i)^r\right\|^{2r}} \\
+    &\ \ \ +\sqrt{r^{rs}\left\|T_s(k_b)^r\right\|^{2r}}+\sqrt{r^{rs}\left\|T_s(k_t)^r\right\|^{2r}} \\
+    &\leq m+\frac{5}{2}+m r^{rs/2}(47s)^{rs/2}+r^{rs/2}(105s)^{rs/2} \\ 
+    &\ \ \ +r^{rs/2}(105s)^{rs/2} \\
+    &\leq m+\frac{5}{2}+(m+2)(105rs)^{rs/2}.
+\end{align*}
+Using the fact that $m\leq\frac{1}{2}2^r$ and $r,s \geq 1$, we then have
+\begin{align*}
+    \|p\| &\leq m+\frac{5}{2}+(m+2)(105rs)^{rs/2} \\
+        &\leq \frac{1}{2}2^r+\frac{5}{2}+\left( \frac{1}{2}2^r +2\right)(105rs)^{rs/2} \\
+        &\leq 2\cdot2^r+\frac{5}{2}\cdot 2^r(105rs)^{rs/2} \\
+        &= 2^r\left( 2+\frac{5}{2}\right)(105rs)^{rs/2} \\
+        &\leq 4^{rs/2}\cdot\frac{9}{2}(105rs)^{rs/2} \\
+        &=\frac{9}{2}(420rs)^{rs/2}.
+\end{align*}
+Substitutions of $r$ and $s$ finish the proof.
+\end{proof}
+
+Our main technical result is the following margin transformation using the rational kernel.
+
+\begin{theorem}
+(Margin transformation). Let $(x_1,y_1),(x_2,y_2),\ldots,(x_T,y_T)\in \ball(0,1)\times [K]$
+be a sequence of labeled examples that is group weakly linear separable with margin $\gamma >0$.
+Let $L$ be number of group weakly separable such that $L\leq K.$
+Let $\phi$ defined as in (\ref{eqn:phi}) let
+\[
+    \gamma' = \frac{\left[840\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{-\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}}{9\sqrt{L}},
+\]
+The feature map $\phi$ makes the sequence $(\phi (x_1),y_1),(\phi (x_2),y_2),\ldots,(\phi (x_T),y_T)$
+strongly linearly separable with margin $\gamma'$.
+\label{thm:margin-trans}
+\end{theorem}
+
+We note that the margin depends on $L$, the number of groups, instead of $K$, the number of classes.  Using Theorem~\ref{thm:margin-trans} with Theorem~\ref{thm:kernel-bandit-mistake-bound} we obtain the following mistake bound for our algorithm.
+
+\begin{proof}[Proof of Theorem~\ref{thm:margin-trans}]
+
+Consider class $i\in[K]$. We will apply
+Theorem~\ref{thm:sep-poly}. For $j\in\{1,\ldots,L-1\}$, let
+\[
+v_j=\left\{
+\begin{array}{ll}
+    u_{g(i)}-u_j, & \mbox{if $j<g(i)$,} \\
+    u_{g(i)}-u_{j+1}, & \mbox{if $j>g(i)$.}
+\end{array}
+\right.    
+\]
+Also, let $v'=u'_{g(i)}$, $v_b=\frac{b_i}{\|u'_{g(i)}\|}u'_{g(i)}$
+and $v_t=\frac{t_i}{\|u'_{g(i)}\|}u'_{g(i)}$.
+
+From Theorem~\ref{thm:sep-poly}, there exists a multivariate
+polynomial $p_i:\R^d\to \R$ such that for all $t\in[T]$ and the
+sequence $(x_1,y_1),(x_2,y_2),(x_t,y_t),\ldots,(x_T,y_T)$, we have
+\begin{itemize}
+\item if $y_t=i$, $p_i(x_t)\geq \frac{1}{2}$, since $x_t\in R^{+}_i
+    \cap \hat{R}^{+}_i$, and
+\item if $y_t\neq i,$ $p_i(x_t)\leq -\frac{1}{2}$, since $x_t\in
+    R^{-}_i \cap \hat{R}^{-}_i$.
+\end{itemize}
+
+It is left to check the properties of $p$.
+Theorem~\ref{thm:sep-poly} implies that
+\[
+\|p\|\leq \frac{9}{2}\left[420\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}
+\]
+By Lemma~\ref{lem:norm-bound}, there exists $c_i\in\ell_2$ such that $\fdot{c_i}{\phi(x)}=p_i(x),$ and
+\[
+\|c_i\|_{\ell_2}\leq \frac{9}{2}\left[840\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}.
+\]
+
+We are ready to construct strongly separable vectors for our group
+weakly separable case in $\ell_2$ such that
+$\|z_1\|^2+\|z_2\|^2+\ldots+\|z_L\|^2\leq 1$ and for all $t\in [T]$,
+$\fdot{z_{y_t}}{x_t} \geq \gamma$, and for all $j\neq y_t$,
+$\fdot{z_j}{x_t}\leq -\gamma$, by scaling $c_i$ appropriately as
+follows.  We can let
+\[
+z_i=\frac{c_i}{\sqrt{L}\cdot \frac{9}{2}\left[840\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}},
+\]
+and
+\[
+\gamma = \frac{\left[840\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{-\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}}{9\sqrt{L}},
+\]
+then the theorem follows.    
+\end{proof}
+
+\begin{corollary}
+(Mistake bound for group weakly linearly separable case) 
+Let $K$ be positive integer, $L\leq K$ and $\gamma$ be positive real number. 
+The mistake bound made by Algorithm~\ref{alg:kernel-bandit} when the examples are group weakly
+linearly separable with margin $\gamma$ with $L$ groups is at most
+$K\cdot 2^{\tilde{O}(\sqrt{1/\gamma}\log L)}$.
+\label{cor:mistake-bound}
+\end{corollary}
+
+Note that multiplicative factor of $K$ is hidden from the second bound of~\cite{BeygelzimerPSTWZ2019-separable} because of the $\tilde{O}$ notation on the exponent.  We cannot do that because in our exponent we have only $\log L$ which can be much smaller than $K$.  Their actual bound (showing $K$), which can be compared to ours, is $K\cdot 2^{\tilde{O}(\sqrt{1/\gamma}\log K)}$.
+  
