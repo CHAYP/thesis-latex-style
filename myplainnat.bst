@@ -308,7 +308,7 @@ FUNCTION {format.doi}
 FUNCTION {format.title}
 { title empty$
     { "" }
-    { title $ }
+    { title "t" change.case$ }
   if$
 }
 
@@ -436,6 +436,10 @@ FUNCTION {format.date}
   %  }
   %if$
   extra.label *
+}
+
+FUNCTION {format.year}
+{ title 
 }
 
 FUNCTION {format.btitle}
@@ -624,7 +628,7 @@ FUNCTION {format.thesis.type}
 { type empty$
     'skip$
     { pop$
-      type "t"$
+      type "t" change.case$
     }
   if$
 }

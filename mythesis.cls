@@ -157,7 +157,7 @@
 
 \newcommand{\chaptertitle}[1]{%
 
-    \medskip
+    \smallskip
     {\centering
     \large\bfseries {#1} \par% chapter title
     }
