@@ -5,7 +5,7 @@
 \subsection{Online multiclass classification}
 For classification in online version, an input $x_t$ comes at time $t$
 , classifier predicts $\hat{y_t}$ then receives feedback information $y_t$ that is the class of $x_t$.
-Let $K$ be the number of classes, $T$ be the number of rounds and $y_t\in \{1,2,\dots,K\}$.
+Let $K$ be the number of classes, $T$ be the number of rounds and $y_t\in \ftoN{K}$.
 The protocal(fig~\ref{fig:alg-online}) does until time $T$.
 
 \begin{figure}[hbt!]
@@ -14,9 +14,9 @@ The protocal(fig~\ref{fig:alg-online}) does until time $T$.
     \DontPrintSemicolon
     % \KwData{Number of classes $K$, number of rounds $T$}
     \Begin{
-      \For{$t=1,2,\ldots,T$}{
-        Adversary chooses example $(x_t,y_t)\in V \times \{1,2,\dots,K\}$, where $x_t$ is revealed to the learner.\\
-        Predict class label $\hat{y_t} \in \{1,2,\dots,K\}$.\\
+      \For{$t=\ftoN{T}$}{
+        Adversary chooses example $(x_t,y_t)\in V \times \ftoN{K}$, where $x_t$ is revealed to the learner.\\
+        Predict class label $\hat{y_t} \in \ftoN{K}$.\\
         Observe feedback $y_t$.
         }
         }
@@ -43,7 +43,7 @@ and makes mistake at most $\left\lfloor \left( \frac{R}{\gamma} \right)^2\right\
     \KwData{Inner product space $(V,\langle\cdot,\cdot\rangle)$}
     \Begin{
       Initialize $w^{(1)}=0$ \\
-        \For{$t=1,2,\ldots,T$}{
+        \For{$t=\ftoN{T}$}{
           Predict class label $\hat{y_t}
           \begin{cases}
             +1 &\quad \text{if $\langle x_t,w^{(t)}\rangle \geq 0$} \\
@@ -81,17 +81,17 @@ The multiclass perceptron makes mistake at most $\left\lfloor 2\left( \frac{R}{\
     \KwData{Inner product space $(V,\langle\cdot,\cdot\rangle)$}
     \Begin{
       Initialize $w_1^{(1)}= w_2^{(1)}= \cdots = w_K^{(1)} = 0$ \\
-      \For{$t=1,2,\ldots,T$}{
+      \For{$t=\ftoN{T}$}{
         Observe feature vector $x_t\in V$.\\
-        Predict $\hat{y_t}=\text{argmax}_{i\in \{1,2,\dots,K\}}\left<w_t^{(i)},x_t\right>$.\\
-        Observe $y_t\in\{1,2,\dots,K\}$.\\
+        Predict $\hat{y_t}=\text{argmax}_{i\in \ftoN{K}}\left<w_t^{(i)},x_t\right>$.\\
+        Observe $y_t\in\ftoN{K}$.\\
         \eIf{$\hat{y_t}\neq y_t$}{
           Set $w_i^{(t+1)}=w_i^{(t)}$\\
-          For all $i\in \{1,2,\dots,K\}\setminus\{y_t,\hat{y_t}\}$ \;
+          For all $i\in \ftoN{K}\setminus\{y_t,\hat{y_t}\}$ \;
           Update $w_{y_t}^{(t+1)}=w_{y_t}^{(t)}+x_t$ \;
           Update $w_{\hat{y_t}}^{(t+1)}=w_{\hat{y_t}}^{(t)}-x_t$ \;
         }{
-          Set $w_{i}^{(t+1)}=w_{i}^{(t)}$ for all $i\in \{1,2,\dots,K\}$
+          Set $w_{i}^{(t+1)}=w_{i}^{(t)}$ for all $i\in \ftoN{K}$
         }
       }
     }
@@ -104,7 +104,7 @@ The multiclass perceptron makes mistake at most $\left\lfloor 2\left( \frac{R}{\
 \label{theorem:mperceptron}
 Let $(V,\cdot,\cdot)$ be an inner product space, let $K$ be a
 positive integer, let $\gamma$ be a positive real number and let $R$ be a non-negative real number. If $(x_1,y_1),(x_2,y_2),\dots,(x_K,y_K)$
-is a sequence of labeled examples in $V\times\{1,2,\dots,K\}$ that are strongly linearly separable with margin $\gamma$ and
+is a sequence of labeled examples in $V\times\ftoN{K}$ that are strongly linearly separable with margin $\gamma$ and
 $\Vert x_1\Vert ,\Vert x_2\Vert ,\dots,\Vert x_T \Vert\leq R$ then MULTICLASS PERCEPTRON algorithm makes at most $\left\lfloor 2\left( \frac{R}{\gamma} \right)^2\right\rfloor$ mistakes.
 \end{theorem}
 
@@ -190,7 +190,7 @@ following theorem.
     \KwData{Kernel function $k(\cdot,\cdot)$}
     \Begin{
         Initialize $J_1^{(1)}=J_2^{(2)}=\cdots=J_k^{(k)}=\emptyset$\;
-        \For{$t=1,2,\ldots,T$}{
+        \For{$t=\ftoN{T}$}{
           Observe feature vector $x_t$\;
           Compute
           $S_t=\left\{i : 1\leq i\leq K, \sum_{(x,y)\in J_i^{(t)}} yk(x,x_t)\geq 0\right\}$\;
