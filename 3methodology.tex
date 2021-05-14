@@ -47,9 +47,7 @@ Let ${\mathcal G}=\{G_1,G_2,\ldots,G_L\}$ be a partition of $[K]$, i.e., $G_i\su
 $G_i\cap G_j=\emptyset$ for $i\neq j$, and $\bigcup G_i = [K]$.  
 Let $g:[K] \rightarrow [L]$ be a mapping function such that $g(i)\mapsto j$ iff $i\in G_j$.
 We say that the labeled examples
-\[
-(x_1,y_1),(x_2,y_2),\ldots,(x_T,y_T)\in V\times[K]
-\]
+$(x_1,y_1),(x_2,y_2),\ldots,(x_T,y_T)\in V\times[K]$
 are {\em group weakly linear separable with margin $\gamma$ under ${\mathcal G}$} 
 if 
 \begin{enumerate}
@@ -78,12 +76,16 @@ our proofs, the ``margin'' between intra-group classes is $2\gamma$;
 this would create the $+\gamma$ and $-\gamma$ gaps that already exist
 between groups.
 
-To illustrate the idea, Fig.~\ref{fig:sep-examples} shows 3 sets of examples.  
+To illustrate the idea, Fig.~\ref{fig:sep-examples} showing different linear separable conditions.
+Thick lines represent class boundaries. 
+(a) Strongly linear separable examples with 3 classes (linearly separable in $\R^3$).  
+(b) Weakly linear separable examples with 3 classes.  
+(c) Group weakly linear separable examples with 3 groups; group 1 (white) contains 3 classes, group 2 (black) contains 4 classes, and group 3 (gray) contains 1 class.  
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.45\textwidth]{sep-examples.png}
-\caption{Three set of examples in $\R^2$ showing different linear separable conditions. Thick lines represent class boundaries. (a) Strongly linear separable examples with 3 classes (linearly separable in $\R^3$).  (b) Weakly linear separable examples with 3 classes.  (c) Group weakly linear separable examples with 3 groups; group 1 (white) contains 3 classes, group 2 (black) contains 4 classes, and group 3 (gray) contains 1 class.}
+\caption{Three set of examples in $\R^2$.}
 \label{fig:sep-examples}
 \end{figure}
 
