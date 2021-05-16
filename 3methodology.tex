@@ -251,14 +251,14 @@ The degree of $p$ is the maximum degree of the terms $(T_s(1-\fdot{v_i}{x}))^r$,
 Finally, we prove the upper bound of norm of $p$. Let $f_i(x)=1-\fdot{v_i}{x}$, 
 let $k_b(x)=1-\fdot{x-v_b}{v'}/2$, $k_t(x)=1-\fdot{v_t-x}{v'}/2$.
 \[
-\|f_i\|^2=1+\|v_i\|^2\leq 1+1=2,
+\|f_i\|^2\leq 1+\|v_i\|^2\cdot\|x\|^2\leq 1+1=2,
 \]
 \[
-\|k_b\|^2=1+\frac{\|x-v_b\|^2\cdot\|u'\|^2}{2}\leq 1+\frac{4\cdot1}{2}=3
+\|k_b\|^2\leq 1+\frac{\|x-v_b\|^2\cdot\|u'\|^2}{2}\leq 1+\frac{4\cdot1}{2}=3
 \]
 and
 \[
-\|k_t\|^2=1+\frac{\|v_t-x\|^2\cdot\|u'\|^2}{2}\leq 1+\frac{4\cdot1}{2}=3.
+\|k_t\|^2\leq 1+\frac{\|v_t-x\|^2\cdot\|u'\|^2}{2}\leq 1+\frac{4\cdot1}{2}=3.
 \]
 
 Let $T_s(z)=\sum_{j=0}^s c_j z^j$ be the expansion of $s$-th Chebyshev polynomial.
@@ -268,14 +268,14 @@ By lemma~\ref{lem:cheby-prop} and \ref{lem:poly-prop}, $s+1\leq2^s$ for any non-
 % need prop of norm of polynomial
 \begin{align*}
     \|T_s(1-\fdot{v_i}{x})\|^2 &= \|T_s(f_i)\|^2 \\
-    &=\left\|\sum_{j=0}^s c_j(f_i)^j\right\|^2 \\
-    &\leq (s+1)\sum_{j=0}^s\left\| c_j(f_i)^j\right\|^2 \\
+    &=\left\|\sum_{j=0}^s c_j(f_i)^j\right\|^2\\
+    &\leq (s+1)\sum_{j=0}^s\left\| c_j(f_i)^j\right\|^2 & &\text{part 3 of lemma~\ref{lem:poly-prop}}\\
     &=(s+1)\sum_{j=0}^s c_j^2\left\|(f_i)^j\right\|^2 \\
-    &\leq (s+1)\sum_{j=0}^s c_j^2j^j\left\|f_i\right\|^{2j} \\
-    &\leq (s+1)\sum_{j=0}^s c_j^2j^j2^{2j} \\
+    &\leq (s+1)\sum_{j=0}^s c_j^2j^j\left\|f_i\right\|^{2j} & &\text{part 2 of lemma~\ref{lem:poly-prop}}\\
+    &\leq (s+1)\sum_{j=0}^s c_j^2j^j2^{2j}\\
     &\leq (s+1)s^s2^{2s}\sum_{j=0}^s c_j^2 \\
     &=(s+1)s^s2^{2s}\|T_s\|^2 \\
-    &=(s+1)s^s2^{2s}(1+\sqrt{2})^{2s} \\
+    &=(s+1)s^s2^{2s}(1+\sqrt{2})^{2s} & &\text{part 7 of lemma~\ref{lem:cheby-prop}}\\
     &=(s+1)\left(4(1+\sqrt{2})^2s\right)^s \\
     &\leq (8(1+\sqrt{2})^2s)^s \\
     &\leq (47s)^s.
@@ -285,11 +285,11 @@ The other two terms $\|T_s(\fdot{x-v_b}{v'}/2)\|^2$ and $\|T_s(\fdot{v_t-x}{v'}/
 \begin{align*}
     \|T_s(\fdot{x-v_b}{v'}/2)\|^2&=\|T_s(k_b)\|^2 \\
     &=\left\|\sum_{j=0}^s c_j(k_b)^j\right\|^2 \\
-    &\leq (s+1)\sum_{j=0}^s c_j^2j^j\left\|k_b\right\|^{2j} \\
+    &\leq (s+1)\sum_{j=0}^s c_j^2j^j\left\|k_b\right\|^{2j} & &\text{part 2,3 of lemma~\ref{lem:poly-prop}}\\
     &\leq (s+1)\sum_{j=0}^s c_j^2j^j3^{2j} \\
     &\leq (s+1)s^s3^{2s}\sum_{j=0}^s c_j^2 \\
     &=(s+1)s^s3^{2s}\|T_s\|^2 \\
-    &=(s+1)s^s3^{2s}(1+\sqrt{2})^{2s} \\
+    &=(s+1)s^s3^{2s}(1+\sqrt{2})^{2s} & &\text{part 7 of lemma~\ref{lem:cheby-prop}} \\
     &=(s+1)\left(9(1+\sqrt{2})^2s\right)^s \\
     &\leq (9(1+\sqrt{2})^2s)^s \\
     &\leq (105s)^s
