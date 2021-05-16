@@ -34,7 +34,6 @@ Perceptron (\cite{rosenblatt58a}) is a binary classifier that answers only input
 A vector $w$ represented as a class and the answer is depends on the inner product of $x$ and $w$ (fig~\ref{fig:alg-perceptron}).
 The perceptron update $w$ only when the answer is wrong 
 and makes mistake at most $\left\lfloor \left( \frac{R}{\gamma} \right)^2\right\rfloor$ (theorem~\ref{theorem-perceptron}).
-
 \begin{figure}[hbt!]
   \begin{algorithm}[H]
     \SetAlgoLined
@@ -73,6 +72,7 @@ and makes mistake at most $\left\lfloor \left( \frac{R}{\gamma} \right)^2\right\
 Let $K$ be the number of classes, multiclass perceptron construct from $K$ perceptrons
 and update depends on $y_t$, see in (fig~\ref{fig:alg-mperceptron}). 
 The multiclass perceptron makes mistake at most $\left\lfloor 2\left( \frac{R}{\gamma} \right)^2\right\rfloor$ (theorem~\ref{theorem:mperceptron}).
+As perceptron, the algorithm only updates when the answer goes wrong.
 \begin{figure}[hbt!]
   \begin{algorithm}[H]
     \SetAlgoLined
@@ -178,7 +178,11 @@ Their approach for dealing the weakly linear separable case is to use
 the kernel method.  They introduced the {\sc Kernelized Bandit
   Algorithm} (Algorithm~\ref{alg:kernel-bandit}) and proved the
 following theorem.
-
+More describe for the algorithm, set $S_t$ is a set of classes that the algorithm 
+picks one of them to be the answer in round $t$. If $S_t$ is empty set, the answer is unifrom over the $1$ to $K$.
+As classic perceptron, the algorithm updates when the answer is wrong
+but only if $S_t$ is not empty, which means the algorithm updates when 
+the answer that from purpose goes wrong. And more updates when the answer fortuitously correct($S_t$ is empty).
 \begin{figure}[bht!]
   
   \begin{algorithm}[H]
