@@ -248,18 +248,29 @@ Applying the same argument as in Subcase 1, this implies that $p(x)\leq-\frac{1}
 
 The degree of $p$ is the maximum degree of the terms $(T_s(1-\fdot{v_i}{x}))^r$, $(T_s(1-\fdot{x-v_b}{v'}/2))^r$, and $(T_s(1-\fdot{v_t-x}{v'})/2)^r$; thus, it is $r\cdot s$.
 
-Finally, we prove the upper bound of norm of $p$. Let $f_i(x)=1-\fdot{v_i}{x}$, 
+Finally, we prove the upper bound of norm of $p$. 
+Let $f_i(x)=1-\fdot{v_i}{x}$, 
 let $k_b(x)=1-\fdot{x-v_b}{v'}/2$, $k_t(x)=1-\fdot{v_t-x}{v'}/2$.
-\[
-\|f_i\|^2\leq 1+\|v_i\|^2\cdot\|x\|^2\leq 1+1=2,
-\]
-\[
-\|k_b\|^2\leq 1+\frac{\|x-v_b\|^2\cdot\|u'\|^2}{2}\leq 1+\frac{4\cdot1}{2}=3
-\]
-and
-\[
-\|k_t\|^2\leq 1+\frac{\|v_t-x\|^2\cdot\|u'\|^2}{2}\leq 1+\frac{4\cdot1}{2}=3.
-\]
+Notice that $\fdot{v_i}{x}$,$\fdot{x-v_b}{v'}$ and $\fdot{v_t-x}{v'}$ are multivariate polynomial.
+Let $h_i(x)=\fdot{v_i}{x}$ then $f_i(x)=1-h_i(x)$, and use property 3 of lemma~\ref{lem:poly-prop} we have
+\begin{align*}
+% \|f_i\|^2\leq 1+\|v_i\|^2\cdot\|x\|^2\leq 1+1=2, \\
+\|f_i\|^2&\leq 2\left(\|1\|^2 +\|h_i(x)\|^2 \right) \\
+&\leq 2\left(\|1\|^2 +\|v_i\|^2 \right), & \text{part 2 of lemma~\ref{lem:poly-prop}} \\
+&\leq 2(1+1) \\
+&=4 
+\end{align*}
+Let $h'(x)=\fdot{x}{v'}$ then $k_b(x)=1-\fdot{x-v_b}{v'}/2=1-h'(x)/2+h'(v_b)/2$
+\begin{align*}
+\|k_b\|^2&\leq 3\left( \|1\|^2 + \frac{\|h'(x)\|^2}{2}+ \frac{\|h'(v_b)\|^2}{2} \right) \\
+&\leq 3\left( \|1\|^2 + \frac{\|v'\|^2}{2}+ \frac{\|v'\|^2}{2} \right) & \text{part 2 of lemma~\ref{lem:poly-prop}} \\
+&= 3\left(1+\frac{1}{2}+\frac{1}{2}\right) \\
+&=6,
+\end{align*}
+and also $k_t(x)=1-\fdot{v_t-x}{v'}/2=1-h'(v_t)/2+h'(x)/2$ then
+\begin{align*}
+  \|k_t\|^2&\leq 3\left( \|1\|^2 + \frac{\|h'(v_t)\|^2}{2}+ \frac{\|h'(x)\|^2}{2} \right)=6.
+\end{align*}
 
 Let $T_s(z)=\sum_{j=0}^s c_j z^j$ be the expansion of $s$-th Chebyshev polynomial.
 
@@ -272,13 +283,13 @@ By lemma~\ref{lem:cheby-prop} and \ref{lem:poly-prop}, $s+1\leq2^s$ for any non-
     &\leq (s+1)\sum_{j=0}^s\left\| c_j(f_i)^j\right\|^2 & &\text{part 3 of lemma~\ref{lem:poly-prop}}\\
     &=(s+1)\sum_{j=0}^s c_j^2\left\|(f_i)^j\right\|^2 \\
     &\leq (s+1)\sum_{j=0}^s c_j^2j^j\left\|f_i\right\|^{2j} & &\text{part 2 of lemma~\ref{lem:poly-prop}}\\
-    &\leq (s+1)\sum_{j=0}^s c_j^2j^j2^{2j}\\
-    &\leq (s+1)s^s2^{2s}\sum_{j=0}^s c_j^2 \\
-    &=(s+1)s^s2^{2s}\|T_s\|^2 \\
-    &=(s+1)s^s2^{2s}(1+\sqrt{2})^{2s} & &\text{part 7 of lemma~\ref{lem:cheby-prop}}\\
-    &=(s+1)\left(4(1+\sqrt{2})^2s\right)^s \\
-    &\leq (8(1+\sqrt{2})^2s)^s \\
-    &\leq (47s)^s.
+    &\leq (s+1)\sum_{j=0}^s c_j^2j^j4^{2j}\\
+    &\leq (s+1)s^s4^{2s}\sum_{j=0}^s c_j^2 \\
+    &=(s+1)s^s4^{2s}\|T_s\|^2 \\
+    &=(s+1)s^s4^{2s}(1+\sqrt{2})^{2s} & &\text{part 7 of lemma~\ref{lem:cheby-prop}}\\
+    &=(s+1)\left(16(1+\sqrt{2})^2s\right)^s \\
+    &\leq (32(1+\sqrt{2})^2s)^s \\
+    &\leq (187s)^s.
 \end{align*}
 
 The other two terms $\|T_s(\fdot{x-v_b}{v'}/2)\|^2$ and $\|T_s(\fdot{v_t-x}{v'}/2)\|^2$ can be analyzed similarly.  We have that
@@ -286,20 +297,20 @@ The other two terms $\|T_s(\fdot{x-v_b}{v'}/2)\|^2$ and $\|T_s(\fdot{v_t-x}{v'}/
     \|T_s(\fdot{x-v_b}{v'}/2)\|^2&=\|T_s(k_b)\|^2 \\
     &=\left\|\sum_{j=0}^s c_j(k_b)^j\right\|^2 \\
     &\leq (s+1)\sum_{j=0}^s c_j^2j^j\left\|k_b\right\|^{2j} & &\text{part 2,3 of lemma~\ref{lem:poly-prop}}\\
-    &\leq (s+1)\sum_{j=0}^s c_j^2j^j3^{2j} \\
-    &\leq (s+1)s^s3^{2s}\sum_{j=0}^s c_j^2 \\
-    &=(s+1)s^s3^{2s}\|T_s\|^2 \\
-    &=(s+1)s^s3^{2s}(1+\sqrt{2})^{2s} & &\text{part 7 of lemma~\ref{lem:cheby-prop}} \\
-    &=(s+1)\left(9(1+\sqrt{2})^2s\right)^s \\
-    &\leq (9(1+\sqrt{2})^2s)^s \\
-    &\leq (105s)^s
+    &\leq (s+1)\sum_{j=0}^s c_j^2j^j6^{2j} \\
+    &\leq (s+1)s^s6^{2s}\sum_{j=0}^s c_j^2 \\
+    &=(s+1)s^s6^{2s}\|T_s\|^2 \\
+    &=(s+1)s^s6^{2s}(1+\sqrt{2})^{2s} & &\text{part 7 of lemma~\ref{lem:cheby-prop}} \\
+    &=(s+1)\left(36(1+\sqrt{2})^2s\right)^s \\
+    &\leq (72(1+\sqrt{2})^2s)^s \\
+    &\leq (420s)^s
 \end{align*}
 % (105s')^s'
 and
 \begin{align*}
     \|T_s(\fdot{v_t-x}{v'}/2)\|^2 &= \|T_s(k_t)\|^2 \\
     &=\left\|\sum_{j=0}^s c_j(k_t)^j\right\|^2 \\
-    &\leq (105s)^s.
+    &\leq (420s)^s.
 \end{align*}
 
 Finally,
@@ -310,18 +321,18 @@ Finally,
     &\ \ \ +\sqrt{\left\|T_s(k_b)^r\right\|^2} +\sqrt{\left\|T_s(k_t)^r\right\|^2} \\
     &\leq m+\frac{5}{2}+\sum_{i=1}^m\sqrt{r^{rs}\left\|T_s(f_i)^r\right\|^{2r}} \\
     &\ \ \ +\sqrt{r^{rs}\left\|T_s(k_b)^r\right\|^{2r}}+\sqrt{r^{rs}\left\|T_s(k_t)^r\right\|^{2r}} \\
-    &\leq m+\frac{5}{2}+m r^{rs/2}(47s)^{rs/2}+r^{rs/2}(105s)^{rs/2} \\ 
-    &\ \ \ +r^{rs/2}(105s)^{rs/2} \\
-    &\leq m+\frac{5}{2}+(m+2)(105rs)^{rs/2}.
+    &\leq m+\frac{5}{2}+m r^{rs/2}(187s)^{rs/2}+r^{rs/2}(420s)^{rs/2} \\ 
+    &\ \ \ +r^{rs/2}(420s)^{rs/2} \\
+    &\leq m+\frac{5}{2}+(m+2)(420rs)^{rs/2}.
 \end{align*}
 Using the fact that $m\leq\frac{1}{2}2^r$ and $r,s \geq 1$, we then have
 \begin{align*}
-    \|p\| &\leq m+\frac{5}{2}+(m+2)(105rs)^{rs/2} \\
-        &\leq \frac{1}{2}2^r+\frac{5}{2}+\left( \frac{1}{2}2^r +2\right)(105rs)^{rs/2} \\
-        &\leq 2\cdot2^r+\frac{5}{2}\cdot 2^r(105rs)^{rs/2} \\
-        &= 2^r\left( 2+\frac{5}{2}\right)(105rs)^{rs/2} \\
-        &\leq 4^{rs/2}\cdot\frac{9}{2}(105rs)^{rs/2} \\
-        &=\frac{9}{2}(420rs)^{rs/2}.
+    \|p\| &\leq m+\frac{5}{2}+(m+2)(420rs)^{rs/2} \\
+        &\leq \frac{1}{2}2^r+\frac{5}{2}+\left( \frac{1}{2}2^r +2\right)(420rs)^{rs/2} \\
+        &\leq 2\cdot2^r+\frac{5}{2}\cdot 2^r(420rs)^{rs/2} \\
+        &= 2^r\left( 2+\frac{5}{2}\right)(420rs)^{rs/2} \\
+        &\leq 4^{rs/2}\cdot\frac{9}{2}(420rs)^{rs/2} \\
+        &=\frac{9}{2}(1680rs)^{rs/2}.
 \end{align*}
 Substitutions of $r$ and $s$ finish the proof.
 \end{proof}
@@ -334,7 +345,7 @@ be a sequence of labeled examples that is group weakly linear separable with mar
 Let $L$ be number of group weakly separable such that $L\leq K.$
 Let $\phi$ defined as in (\ref{eqn:phi}) let
 \[
-    \gamma' = \frac{\left[840\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{-\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}}{9\sqrt{L}},
+    \gamma' = \frac{\left[3360\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{-\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}}{9\sqrt{L}},
 \]
 The feature map $\phi$ makes the sequence $(\phi (x_1),y_1),(\phi (x_2),y_2),\ldots,(\phi (x_T),y_T)$
 strongly linearly separable with margin $\gamma'$.
@@ -371,11 +382,11 @@ sequence $(x_1,y_1),(x_2,y_2),(x_t,y_t),\ldots,(x_T,y_T)$, we have
 It is left to check the properties of $p$.
 Theorem~\ref{thm:sep-poly} implies that
 \[
-\|p\|\leq \frac{9}{2}\left[420\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}
+\|p\|\leq \frac{9}{2}\left[1680\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}
 \]
 By Lemma~\ref{lem:norm-bound}, there exists $c_i\in\ell_2$ such that $\fdot{c_i}{\phi(x)}=p_i(x),$ and
 \[
-\|c_i\|_{\ell_2}\leq \frac{9}{2}\left[840\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}.
+\|c_i\|_{\ell_2}\leq \frac{9}{2}\left[3360\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}.
 \]
 
 We are ready to construct strongly separable vectors for our group
@@ -385,11 +396,11 @@ $\fdot{z_{y_t}}{x_t} \geq \gamma$, and for all $j\neq y_t$,
 $\fdot{z_j}{x_t}\leq -\gamma$, by scaling $c_i$ appropriately as
 follows.  We can let
 \[
-z_i=\frac{c_i}{\sqrt{L}\cdot \frac{9}{2}\left[840\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}},
+z_i=\frac{c_i}{\sqrt{L}\cdot \frac{9}{2}\left[3360\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}},
 \]
 and
 \[
-\gamma = \frac{\left[840\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{-\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}}{9\sqrt{L}},
+\gamma = \frac{\left[3360\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil\right]^{-\frac{\lceil\log_2(2L+2)\rceil\cdot\left\lceil\sqrt{\frac{2}{\gamma}}\right\rceil}{2}}}{9\sqrt{L}},
 \]
 then the theorem follows.    
 \end{proof}
